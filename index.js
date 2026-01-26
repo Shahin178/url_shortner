@@ -1,6 +1,12 @@
+import "./config/env.js";
 import express from "express";
+import UrlRoute from "./routes/url.js";
+import "./connect.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
-app.listen(PORT, () => console.log(`✅Server is running on PORT:${PORT}`));
+app.use("/url", UrlRoute);
+
+app.listen(PORT, () => console.log(`✅ Server is running on PORT:${PORT}`));
