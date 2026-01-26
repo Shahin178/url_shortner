@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const urlSchema = new mongoose.Schema(
   {
     shortId: {
@@ -12,8 +13,9 @@ const urlSchema = new mongoose.Schema(
     },
     visitHistory: [
       {
-        timeStamp: {
-          type: Number,
+        visitedAt: {
+          type: Date,
+          default: Date.now,
         },
       },
     ],
