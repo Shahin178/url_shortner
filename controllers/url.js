@@ -13,7 +13,7 @@ export const generateNewShortUrl = async (req, res) => {
     redirectUrl: body.url,
     visitHistory: [],
   });
-  return res.status(201).json({ id: shortId });
+  return res.render("home",{id: shortId});
 };
 
 export const getAnalytics = async (req, res) => {
