@@ -1,10 +1,9 @@
 import { nanoid } from "nanoid";
-import Url from "../models/Url.js";
+import Url from "../models/url.js";
 
 export const generateNewShortUrl = async (req, res) => {
   const body = req.body;
-  console.log(body);
-
+ 
   if (!body.url)
     return res.status(400).json({ error: "Redirect URL is required" });
   const shortId = nanoid(8);
@@ -12,6 +11,7 @@ export const generateNewShortUrl = async (req, res) => {
     shortId: shortId,
     redirectUrl: body.url,
     visitHistory: [],
+    createdBy: req.user._id
   });
   return res.render("home",{id: shortId});
 };

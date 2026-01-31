@@ -19,8 +19,15 @@ const urlSchema = new mongoose.Schema(
         },
       },
     ],
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true },
 );
 
-export default mongoose.model("Url", urlSchema);
+const Url = mongoose.models.Url || mongoose.model("Url", urlSchema);
+
+export default Url;
