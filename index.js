@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import Url from "./models/url.js";
 import "./connect.js";
 
-import { restrictToLoggedInUsersOnly, checkAuth } from "./middleware/auth.js";
+import { checkForAuthentication, restrictTo } from "./middleware/auth.js";
 
 import UrlRoute from "./routes/url.js";
 import staticRouter from "./routes/staticRouter.js";
@@ -20,10 +20,11 @@ app.set("views", path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkForAuthentication)
 
-app.use("/url", restrictToLoggedInUsersOnly, UrlRoute);
+app.use("/url", restrictTo(['NORMAL', 'ADMIN']), UrlRoute);
 app.use("/user", userRouter);
-app.use("/", checkAuth, staticRouter);
+app.use("/", staticRouter);
 
 app.use("/:shortId", async (req, res) => {
   const shortId = req.params.shortId;
