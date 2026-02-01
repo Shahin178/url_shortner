@@ -21,30 +21,34 @@ app.set("views", path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(checkForAuthentication)
+app.use(checkForAuthentication);
 
+// ✅ BOT ROUTES (no cookies required)
 app.use("/bot", botRouter);
 
-app.use("/url", restrictTo(['NORMAL', 'ADMIN']), UrlRoute);
+// ✅ USER ROUTES
 app.use("/user", userRouter);
+
+// ✅ AUTH-PROTECTED URL ROUTES (website)
+app.use("/url", restrictTo(["NORMAL", "ADMIN"]), UrlRoute);
+
+// ✅ STATIC PAGES
 app.use("/", staticRouter);
 
-app.use("/:shortId", async (req, res) => {
-  const shortId = req.params.shortId;
+// ✅ REDIRECT — MUST BE LAST
+app.get("/:shortId", async (req, res) => {
+  const { shortId } = req.params;
+
   const entry = await Url.findOneAndUpdate(
-    {
-      shortId: shortId,
-    },
-    {
-      $push: {
-        visitHistory: { timestamp: new Date() },
-      },
-    },
+    { shortId },
+    { $push: { visitHistory: { visitedAt: new Date() } } },
   );
 
-  if (entry) {
-    return res.redirect(entry.redirectUrl);
+  if (!entry) {
+    return res.status(404).send("URL not found");
   }
+
+  return res.redirect(entry.redirectUrl);
 });
 
-app.listen(PORT, () => console.log(`✅ Server is running on PORT:${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server is running on PORT: ${PORT}`));
