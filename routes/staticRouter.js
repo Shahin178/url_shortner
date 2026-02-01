@@ -1,5 +1,5 @@
 import express from "express";
-import Url from "../models/Url.js";
+import Url from "../models/url.js";
 import { restrictTo } from "../middleware/auth.js";
 const router = express.Router();
 
