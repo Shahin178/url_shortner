@@ -10,6 +10,8 @@ export const handleUserLogin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || user.password !== password) {
+    console.log("userrr");
+    
     return res.render("login", { error: "Invalid credentials" });
   }
   const token=setUser(user);

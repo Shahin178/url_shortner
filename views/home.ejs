@@ -101,7 +101,7 @@
     <% if (locals.id) { %>
       <div class="generated-url">
         <strong>URL Generated:</strong>
-        http://localhost:3000/<%= locals.id %>
+        <%= process.env.BASE_URL %>/<%= locals.id %>
       </div>
     <% } %>
 

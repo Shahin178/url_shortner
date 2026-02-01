@@ -10,6 +10,7 @@ import { checkForAuthentication, restrictTo } from "./middleware/auth.js";
 import UrlRoute from "./routes/url.js";
 import staticRouter from "./routes/staticRouter.js";
 import userRouter from "./routes/user.js";
+import botRouter from "./routes/bot.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(checkForAuthentication)
+
+app.use("/bot", botRouter);
 
 app.use("/url", restrictTo(['NORMAL', 'ADMIN']), UrlRoute);
 app.use("/user", userRouter);
