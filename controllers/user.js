@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import User from "../models/user.js";
 import { setUser } from "../service/auth.js";
 
 export const handleUserSignup = async (req, res) => {
