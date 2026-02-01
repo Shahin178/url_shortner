@@ -61,8 +61,8 @@ src/
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/yourusername/url-shortener.git
-cd url-shortener
+git clone https://github.com/Shahin178/url_shortner
+cd url-shortner
 ```
 
 2. Install dependencies:
@@ -137,7 +137,7 @@ Body:
 ```env
 MONGO_URI=<your production MongoDB URI>
 JWT_SECRET=<your production JWT secret>
-BASE_URL=https://your-render-url.onrender.com
+BASE_URL=https://url-shortner-2rq2.onrender.com
 BOT_SECRET=<your bot secret>
 ```
 
